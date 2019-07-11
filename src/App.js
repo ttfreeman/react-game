@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { getCanvasPosition } from "./utils/formulas";
 import Canvas from "./components/Canvas";
 
+// Setting up Azure DevOps CI-CD
+
 class App extends Component {
   constructor(props) {
     super(props);
