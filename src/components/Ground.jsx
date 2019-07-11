@@ -1,13 +1,13 @@
-import React from 'react';
-import { skyAndGroundWidth } from '../utils/constants';
+import React from "react";
+import { skyAndGroundWidth } from "../utils/constants";
 
 const Ground = () => {
   const groundStyle = {
-    fill: '#59a941',
+    fill: "#C3B091"
   };
   const division = {
-    stroke: '#458232',
-    strokeWidth: '3px',
+    stroke: "#765D35",
+    strokeWidth: "3px"
   };
 
   return (

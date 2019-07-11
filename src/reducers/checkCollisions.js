@@ -1,7 +1,7 @@
 import { checkCollision } from "../utils/formulas";
 import { gameHeight } from "../utils/constants";
 
-const checkCollisions = (cannonBalls, flyingDiscs) => {
+const checkCollisions = (missiles, flyingDiscs) => {
   const objectsDestroyed = [];
   flyingDiscs.forEach(flyingDisc => {
     const currentLifeTime = new Date().getTime() - flyingDisc.createdAt;
@@ -15,16 +15,16 @@ const checkCollisions = (cannonBalls, flyingDiscs) => {
       x2: calculatedPosition.x + 40,
       y2: calculatedPosition.y + 10
     };
-    cannonBalls.forEach(cannonBall => {
+    missiles.forEach(missile => {
       const rectB = {
-        x1: cannonBall.position.x - 8,
-        y1: cannonBall.position.y - 8,
-        x2: cannonBall.position.x + 8,
-        y2: cannonBall.position.y + 8
+        x1: missile.position.x - 8,
+        y1: missile.position.y - 8,
+        x2: missile.position.x + 8,
+        y2: missile.position.y + 8
       };
       if (checkCollision(rectA, rectB)) {
         objectsDestroyed.push({
-          cannonBallId: cannonBall.id,
+          missileId: missile.id,
           flyingDiscId: flyingDisc.id
         });
       }

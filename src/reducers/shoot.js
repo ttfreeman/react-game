@@ -3,16 +3,16 @@ import { calculateAngle } from "../utils/formulas";
 function shoot(state, action) {
   if (!state.gameState.started) return state;
 
-  const { cannonBalls } = state.gameState;
+  const { missiles } = state.gameState;
 
-  if (cannonBalls.length === 2) return state;
+  if (missiles.length === 2) return state;
 
   const { x, y } = action.mousePosition;
 
   const angle = calculateAngle(0, 0, x, y);
 
   const id = new Date().getTime();
-  const cannonBall = {
+  const missile = {
     position: { x: 0, y: 0 },
     angle,
     id
@@ -22,7 +22,7 @@ function shoot(state, action) {
     ...state,
     gameState: {
       ...state.gameState,
-      cannonBalls: [...cannonBalls, cannonBall]
+      missiles: [...missiles, missile]
     }
   };
 }

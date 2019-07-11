@@ -1,18 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { signIn } from "auth0-web";
-
 import Sky from "./Sky";
 import Ground from "./Ground";
-import CannonBase from "./CannonBase";
-import CannonPipe from "./CannonPipe";
+import MissileBase from "./MissileBase";
+import MissilePipe from "./MissilePipe";
 import CurrentScore from "./CurrentScore";
 import FlyingObject from "./FlyingObject";
 import StartGame from "./StartGame";
 import Title from "./Title";
-import Leaderboard from "./Leaderboard";
-import CannonBall from "./CannonBall";
-import Heart from "./Heart";
+import Missile from "./Missile";
+import Life from "./Life";
 
 const Canvas = props => {
   const gameHeight = 1200;
@@ -24,13 +21,13 @@ const Canvas = props => {
   ];
   const lives = [];
   for (let i = 0; i < props.gameState.lives; i++) {
-    const heartPosition = {
+    const lifePosition = {
       x: -180 - i * 70,
-      y: 35
+      y: 10
     };
-    lives.push(<Heart key={i} position={heartPosition} />);
+    lives.push(<Life key={i} position={lifePosition} />);
   }
-
+  const startColors = ["blue", "yellow", "red", "green"];
   return (
     <svg
       id="aliens-go-home-canvas"
@@ -46,22 +43,21 @@ const Canvas = props => {
       </defs>
       <Sky />
       <Ground />
-      {props.gameState.cannonBalls.map(cannonBall => (
-        <CannonBall key={cannonBall.id} position={cannonBall.position} />
+      {props.gameState.missiles.map(missile => (
+        <Missile
+          key={missile.id}
+          position={missile.position}
+          rotation={missile.angle}
+        />
       ))}
-      <CannonPipe rotation={props.angle} />
-      <CannonBase />
+      <MissilePipe rotation={props.angle} />
+      <MissileBase />
       <CurrentScore score={props.gameState.kills} />
 
       {!props.gameState.started && (
         <g>
           <StartGame onClick={() => props.startGame()} />
           <Title />
-          <Leaderboard
-            currentPlayer={props.currentPlayer}
-            authenticate={signIn}
-            leaderboard={props.players}
-          />
         </g>
       )}
 
@@ -82,26 +78,7 @@ Canvas.propTypes = {
   }).isRequired,
   trackMouse: PropTypes.func.isRequired,
   startGame: PropTypes.func.isRequired,
-  currentPlayer: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    maxScore: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired
-  }),
-  players: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      maxScore: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired
-    })
-  ),
   shoot: PropTypes.func.isRequired
-};
-
-Canvas.defaultProps = {
-  currentPlayer: null,
-  players: null
 };
 
 export default Canvas;
